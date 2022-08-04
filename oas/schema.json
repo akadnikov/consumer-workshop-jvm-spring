@@ -1,0 +1,143 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/products": {
+      "get": {
+        "tags": [
+          "product-controller"
+        ],
+        "operationId": "getAllProducts",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                },
+                "examples": {
+                  "exists": {
+                    "value": [
+                      {
+                        "id": "9",
+                        "type": "CREDIT_CARD",
+                        "name": "GEM Visa",
+                        "version": "v2"
+                      },
+                      {
+                        "id": "10",
+                        "type": "CREDIT_CARD",
+                        "name": "28 Degrees",
+                        "version": "v1"
+                      }
+                    ]
+                  },
+                  "notExists": {
+                    "value": []
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/product/{id}": {
+      "get": {
+        "tags": [
+          "product-controller"
+        ],
+        "operationId": "getProductById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                },
+                "example": {
+                  "id": "50",
+                  "type": "CREDIT_CARD",
+                  "name": "28 Degrees",
+                  "version": "v1"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "description": "Product not found",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Access token is missing or invalid"
+      }
+    },
+    "schemas": {
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][1-9]|2[0123]):[0-5][0-9]"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}
