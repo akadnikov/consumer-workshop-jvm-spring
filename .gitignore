@@ -1,0 +1,5 @@
+### Gradle ###
+.gradle
+.idea
+build/
+.DB_Srore
