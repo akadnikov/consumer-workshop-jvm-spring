@@ -97,9 +97,9 @@ public class ProductConsumerPactTest {
     }
 
     @Test
-    @PactTestFor(pactMethod = "getAllProducts", pactVersion = PactSpecVersion.V3, providerType = ProviderType.SYNCH)
+    @PactTestFor(pactMethod = "getAllProducts", pactVersion = PactSpecVersion.V3)
     void getAllProducts_whenProductsExist(MockServer mockServer, RequestResponsePact requestResponsePact) {
-        File spec = new File("./../oas/schema.json");
+        File spec = new File("oas/schema.json");
         validateWithOAS(requestResponsePact, spec.getAbsolutePath());
 
         Product product = new Product();
@@ -121,7 +121,7 @@ public class ProductConsumerPactTest {
 
         assertEquals(Collections.emptyList(), products);
 
-        File spec = new File("./../oas/schema.json");
+        File spec = new File("oas/schema.json");
         validateWithOAS(requestResponsePact, spec.getAbsolutePath());
     }
 
@@ -133,7 +133,7 @@ public class ProductConsumerPactTest {
         HttpClientErrorException e = assertThrows(HttpClientErrorException.class, () -> new ProductService(restTemplate).getAllProducts());
         assertEquals(401, e.getRawStatusCode());
 
-        File spec = new File("./../oas/schema.json");
+        File spec = new File("oas/schema.json");
         validateWithOAS(requestResponsePact, spec.getAbsolutePath());
     }
 
@@ -150,7 +150,7 @@ public class ProductConsumerPactTest {
 
         assertEquals(expected, product);
 
-        File spec = new File("./../oas/schema.json");
+        File spec = new File("oas/schema.json");
         validateWithOAS(requestResponsePact, spec.getAbsolutePath());
     }
 
@@ -162,7 +162,7 @@ public class ProductConsumerPactTest {
         HttpClientErrorException e = assertThrows(HttpClientErrorException.class, () -> new ProductService(restTemplate).getProduct("11"));
         assertEquals(404, e.getRawStatusCode());
 
-        File spec = new File("./../oas/schema.json");
+        File spec = new File("oas/schema.json");
         validateWithOAS(requestResponsePact, spec.getAbsolutePath());
     }
 
@@ -175,7 +175,7 @@ public class ProductConsumerPactTest {
                 new ProductService(restTemplate).getProduct("10"));
         assertEquals(401, e.getRawStatusCode());
 
-        File spec = new File("./../oas/schema.json");
+        File spec = new File("oas/schema.json");
         validateWithOAS(requestResponsePact, spec.getAbsolutePath());
     }
 

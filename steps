@@ -1,0 +1,11 @@
+#### Consumer-driven PACT
+
+docker-compose up -d
+
+Consumer:
+./gradlew clean test
+./gradlew pactPublish
+./gradlew canideploy -Ppacticipant=FrontendApplication -Platest=true
+
+-PpacticipantVersion=ba85670-0.0.1
+--pacticipant Foo --version 23 --to-environment production

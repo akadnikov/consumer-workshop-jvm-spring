@@ -1,0 +1,266 @@
+{
+  "consumer": {
+    "name": "FrontendApplication"
+  },
+  "interactions": [
+    {
+      "description": "get all products",
+      "providerStates": [
+        {
+          "name": "no products exist"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Authorization": "Bearer 1915-04-19T02:22"
+        },
+        "matchingRules": {
+          "header": {
+            "Authorization": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][1-9]|2[0123]):[0-5][0-9]"
+                }
+              ]
+            }
+          }
+        },
+        "method": "GET",
+        "path": "/products"
+      },
+      "response": {
+        "body": [
+
+        ],
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "get product by ID 10 with no auth token",
+      "providerStates": [
+        {
+          "name": "product with ID 10 exists"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/product/10"
+      },
+      "response": {
+        "status": 401
+      }
+    },
+    {
+      "description": "get product with ID 10",
+      "providerStates": [
+        {
+          "name": "product with ID 10 exists"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Authorization": "Bearer 2058-11-14T21:45"
+        },
+        "matchingRules": {
+          "header": {
+            "Authorization": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][1-9]|2[0123]):[0-5][0-9]"
+                }
+              ]
+            }
+          }
+        },
+        "method": "GET",
+        "path": "/product/10"
+      },
+      "response": {
+        "body": {
+          "id": "10",
+          "name": "28 Degrees",
+          "type": "CREDIT_CARD"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.type": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "get product with ID 11",
+      "providerStates": [
+        {
+          "name": "product with ID 11 does not exist"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Authorization": "Bearer 2001-01-24T15:50"
+        },
+        "matchingRules": {
+          "header": {
+            "Authorization": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][1-9]|2[0123]):[0-5][0-9]"
+                }
+              ]
+            }
+          }
+        },
+        "method": "GET",
+        "path": "/product/11"
+      },
+      "response": {
+        "status": 404
+      }
+    },
+    {
+      "description": "get all products",
+      "providerStates": [
+        {
+          "name": "products exist"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Authorization": "Bearer 2075-11-06T21:53"
+        },
+        "matchingRules": {
+          "header": {
+            "Authorization": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][1-9]|2[0123]):[0-5][0-9]"
+                }
+              ]
+            }
+          }
+        },
+        "method": "GET",
+        "path": "/products"
+      },
+      "response": {
+        "body": [
+          {
+            "id": "09",
+            "name": "Gem Visa",
+            "type": "CREDIT_CARD"
+          },
+          {
+            "id": "09",
+            "name": "Gem Visa",
+            "type": "CREDIT_CARD"
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 2
+                }
+              ]
+            },
+            "$[*].id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].type": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "get all products with no auth token",
+      "providerStates": [
+        {
+          "name": "products exist"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/products"
+      },
+      "response": {
+        "status": 401
+      }
+    }
+  ],
+  "metadata": {
+    "pact-jvm": {
+      "version": "4.3.11"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "ProductService"
+  }
+}
