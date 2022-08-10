@@ -45,6 +45,8 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 
+    implementation 'com.google.protobuf:protobuf-bom:3.17.2'
+
 }
 
 test {

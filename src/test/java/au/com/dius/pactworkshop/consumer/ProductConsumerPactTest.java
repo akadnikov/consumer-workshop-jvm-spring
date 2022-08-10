@@ -47,7 +47,7 @@ public class ProductConsumerPactTest {
         return builder.given("products exist")
                 .uponReceiving("get all products")
                 .method("GET").path("/products")
-                .matchHeader("Authorization", "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][1-9]|2[0123]):[0-5][0-9]")
+                .matchHeader("Authorization", "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0123]):[0-5][0-9]")
                 .willRespondWith()
                 .status(200)
                 .headers(headers())
@@ -61,7 +61,7 @@ public class ProductConsumerPactTest {
 
     @Pact(consumer = "FrontendApplication", provider = "ProductService")
     RequestResponsePact noProductsExist(PactDslWithProvider builder) {
-        return builder.given("no products exist").uponReceiving("get all products").method("GET").path("/products").matchHeader("Authorization", "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][1-9]|2[0123]):[0-5][0-9]").willRespondWith().status(200).headers(headers()).body("[]").toPact();
+        return builder.given("no products exist").uponReceiving("get all products").method("GET").path("/products").matchHeader("Authorization", "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0123]):[0-5][0-9]").willRespondWith().status(200).headers(headers()).body("[]").toPact();
     }
 
     @Pact(consumer = "FrontendApplication", provider = "ProductService")
@@ -74,7 +74,7 @@ public class ProductConsumerPactTest {
         return builder.given("product with ID 10 exists")
                 .uponReceiving("get product with ID 10")
                 .method("GET").path("/product/10")
-                .matchHeader("Authorization", "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][1-9]|2[0123]):[0-5][0-9]")
+                .matchHeader("Authorization", "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0123]):[0-5][0-9]")
                 .willRespondWith()
                 .status(200)
                 .headers(headers())
@@ -88,7 +88,7 @@ public class ProductConsumerPactTest {
 
     @Pact(consumer = "FrontendApplication", provider = "ProductService")
     RequestResponsePact productDoesNotExist(PactDslWithProvider builder) {
-        return builder.given("product with ID 11 does not exist").uponReceiving("get product with ID 11").method("GET").path("/product/11").matchHeader("Authorization", "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][1-9]|2[0123]):[0-5][0-9]").willRespondWith().status(404).toPact();
+        return builder.given("product with ID 11 does not exist").uponReceiving("get product with ID 11").method("GET").path("/product/11").matchHeader("Authorization", "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0123]):[0-5][0-9]").willRespondWith().status(404).toPact();
     }
 
     @Pact(consumer = "FrontendApplication", provider = "ProductService")
@@ -99,9 +99,6 @@ public class ProductConsumerPactTest {
     @Test
     @PactTestFor(pactMethod = "getAllProducts", pactVersion = PactSpecVersion.V3)
     void getAllProducts_whenProductsExist(MockServer mockServer, RequestResponsePact requestResponsePact) {
-        File spec = new File("oas/schema.json");
-        validateWithOAS(requestResponsePact, spec.getAbsolutePath());
-
         Product product = new Product();
         product.setId("09");
         product.setType("CREDIT_CARD");
@@ -111,6 +108,9 @@ public class ProductConsumerPactTest {
         RestTemplate restTemplate = new RestTemplateBuilder().rootUri(mockServer.getUrl()).build();
         List<Product> products = new ProductService(restTemplate).getAllProducts();
         assertEquals(expected, products);
+
+        File spec = new File("oas/schema.json");
+        validateWithOAS(requestResponsePact, spec.getAbsolutePath());
     }
 
     @Test
