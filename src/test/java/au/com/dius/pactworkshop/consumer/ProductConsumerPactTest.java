@@ -61,12 +61,26 @@ public class ProductConsumerPactTest {
 
     @Pact(consumer = "FrontendApplication", provider = "ProductService")
     RequestResponsePact noProductsExist(PactDslWithProvider builder) {
-        return builder.given("no products exist").uponReceiving("get all products").method("GET").path("/products").matchHeader("Authorization", "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0123]):[0-5][0-9]").willRespondWith().status(200).headers(headers()).body("[]").toPact();
+        return builder.given("no products exist")
+                .uponReceiving("get all products")
+                .method("GET")
+                .path("/products")
+                .matchHeader("Authorization", "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0123]):[0-5][0-9]")
+                .willRespondWith()
+                .status(200)
+                .headers(headers())
+                .body("[]").toPact();
     }
 
     @Pact(consumer = "FrontendApplication", provider = "ProductService")
     RequestResponsePact allProductsNoAuthToken(PactDslWithProvider builder) {
-        return builder.given("products exist").uponReceiving("get all products with no auth token").method("GET").path("/products").willRespondWith().status(401).toPact();
+        return builder.given("products exist")
+                .uponReceiving("get all products with no auth token")
+                .method("GET")
+                .path("/products")
+                .willRespondWith()
+                .status(401)
+                .toPact();
     }
 
     @Pact(consumer = "FrontendApplication", provider = "ProductService")
@@ -88,12 +102,25 @@ public class ProductConsumerPactTest {
 
     @Pact(consumer = "FrontendApplication", provider = "ProductService")
     RequestResponsePact productDoesNotExist(PactDslWithProvider builder) {
-        return builder.given("product with ID 11 does not exist").uponReceiving("get product with ID 11").method("GET").path("/product/11").matchHeader("Authorization", "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0123]):[0-5][0-9]").willRespondWith().status(404).toPact();
+        return builder.given("product with ID 11 does not exist")
+                .uponReceiving("get product with ID 11")
+                .method("GET")
+                .path("/product/11")
+                .matchHeader("Authorization", "Bearer (19|20)\\d\\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0123]):[0-5][0-9]")
+                .willRespondWith()
+                .status(404)
+                .toPact();
     }
 
     @Pact(consumer = "FrontendApplication", provider = "ProductService")
     RequestResponsePact singleProductnoAuthToken(PactDslWithProvider builder) {
-        return builder.given("product with ID 10 exists").uponReceiving("get product by ID 10 with no auth token").method("GET").path("/product/10").willRespondWith().status(401).toPact();
+        return builder.given("product with ID 10 exists")
+                .uponReceiving("get product by ID 10 with no auth token")
+                .method("GET")
+                .path("/product/10")
+                .willRespondWith()
+                .status(401)
+                .toPact();
     }
 
     @Test
