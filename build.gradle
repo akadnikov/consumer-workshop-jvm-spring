@@ -7,8 +7,8 @@ plugins {
 
 group = 'au.com.dius.pactworkshop'
 version = '0.0.1'
-sourceCompatibility = '16'
-targetCompatibility = "16"
+sourceCompatibility = '14'
+targetCompatibility = "14"
 
 configurations {
     compileOnly {
@@ -85,14 +85,14 @@ def getGitBranch = { ->
 pact {
     publish {
         pactDirectory = 'build/pacts'
-        pactBrokerUrl = 'http://localhost:8000/'
+        pactBrokerUrl = 'http://pactbroker.dev.gazprombank.ru:8000'
         pactBrokerUsername = 'pact_workshop'
         pactBrokerPassword = 'pact_workshop'
         tags = [getGitBranch(), 'test', 'prod']
         consumerVersion = version.concat("+").concat(getGitHash())
     }
     broker {
-        pactBrokerUrl = 'http://localhost:8000/'
+        pactBrokerUrl = 'http://pactbroker.dev.gazprombank.ru:8000'
 
         // To use basic auth
         pactBrokerUsername = 'pact_workshop'
